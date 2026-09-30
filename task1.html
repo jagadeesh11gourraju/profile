@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Name | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ---------- Colors: change these to restyle the whole page ---------- */
+  :root {
+    --bg: #f6f7fb;
+    --surface: #ffffff;
+    --text: #172033;
+    --muted: #5b667a;
+    --line: #e2e6ee;
+    --accent: #2f5bea;
+    --accent-soft: #e8edfd;
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1523;
+    --surface: #182033;
+    --text: #eef1f8;
+    --muted: #9aa6bd;
+    --line: #27314a;
+    --accent: #7c9bff;
+    --accent-soft: #212c4d;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  body {
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+  }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+  .container { width: min(1000px, 92%); margin: 0 auto; }
+  section { padding: 72px 0 8px; }
+  h2 { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 24px; }
+
+  /* ---------- Navbar ---------- */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-weight: 800; font-size: 1.1rem; }
+  .links { display: flex; gap: 26px; align-items: center; }
+  .links a { color: var(--muted); font-weight: 500; font-size: .95rem; }
+  .links a:hover { color: var(--accent); }
+  .icon-btn {
+    background: var(--surface); border: 1px solid var(--line); color: var(--text);
+    width: 38px; height: 38px; border-radius: 10px; cursor: pointer; font-size: 1.05rem;
+  }
+  .menu-btn { display: none; }
+
+  /* ---------- Hero ---------- */
+  .hero { padding-top: 64px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: center; }
+  .hero h1 { font-size: clamp(2.3rem, 6vw, 3.8rem); line-height: 1.08; letter-spacing: -0.03em; font-weight: 800; }
+  .hero p { color: var(--muted); margin: 18px 0 28px; max-width: 46ch; font-size: 1.05rem; }
+  .btn {
+    display: inline-block; padding: 12px 24px; border-radius: 10px; font-weight: 700;
+    background: var(--accent); color: #fff; border: 2px solid var(--accent); margin-right: 10px;
+  }
+  .btn.ghost { background: transparent; color: var(--accent); }
+  .btn:hover { opacity: .88; }
+
+  /* ID card: holds the personal details */
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 24px;
+  }
+  .avatar {
+    width: 84px; height: 84px; border-radius: 50%; background: var(--accent-soft); color: var(--accent);
+    display: grid; place-items: center; font-size: 1.9rem; font-weight: 800; margin-bottom: 18px;
+  }
+  .details { display: grid; gap: 12px; }
+  .details div { display: flex; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+  .details div:last-child { border: 0; padding: 0; }
+  .details dt { color: var(--muted); font-size: .88rem; }
+  .details dd { font-weight: 600; text-align: right; }
+
+  /* ---------- Education timeline ---------- */
+  .timeline { border-left: 2px solid var(--line); padding-left: 24px; display: grid; gap: 22px; }
+  .item { position: relative; }
+  .item::before {
+    content: ""; position: absolute; left: -32px; top: 8px; width: 12px; height: 12px;
+    border-radius: 50%; background: var(--accent); border: 3px solid var(--bg);
+  }
+  .item h3 { font-size: 1.05rem; }
+  .item span { color: var(--muted); font-size: .92rem; }
+
+  /* ---------- Skills ---------- */
+  .skills { display: grid; gap: 16px; }
+  .skill-top { display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 6px; }
+  .bar { height: 8px; background: var(--accent-soft); border-radius: 99px; overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 99px; transition: width 1s ease; }
+
+  /* ---------- Hobbies & interests ---------- */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .two-col h3 { margin-bottom: 14px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 10px; }
+  .tags li {
+    list-style: none; background: var(--accent-soft); color: var(--accent);
+    padding: 7px 16px; border-radius: 99px; font-weight: 600; font-size: .92rem;
+  }
+
+  footer { margin-top: 80px; border-top: 1px solid var(--line); padding: 26px 0; text-align: center; color: var(--muted); font-size: .9rem; }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 760px) {
+    .hero, .two-col { grid-template-columns: 1fr; }
+    .menu-btn { display: inline-block; }
+    .links {
+      display: none; position: absolute; top: 64px; left: 0; right: 0;
+      flex-direction: column; gap: 0; background: var(--surface); border-bottom: 1px solid var(--line);
+    }
+    .links.open { display: flex; }
+    .links a { padding: 14px 4%; width: 100%; }
+    .links .icon-btn { margin: 8px 4% 14px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .bar i { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="container">
+    <a href="#home" class="logo">Your Name</a>
+    <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+    <div class="links" id="links">
+      <a href="#about">About</a>
+      <a href="#education">Education</a>
+      <a href="#skills">Skills</a>
+      <a href="#interests">Interests</a>
+      <a href="#contact">Contact</a>
+      <button class="icon-btn" id="themeBtn" aria-label="Switch light or dark theme">◐</button>
+    </div>
+  </nav>
+</header>
+
+<main class="container">
+
+  <!-- HERO -->
+  <div class="hero" id="home">
+    <div>
+      <h1>Hi, I'm Your Name.</h1>
+      <p>B.Tech student who enjoys building useful things with code. I'm looking for internships and projects where I can learn and contribute.</p>
+      <a href="#contact" class="btn">Contact me</a>
+      <a href="#education" class="btn ghost">See my education</a>
+    </div>
+
+    <div class="card" id="about">
+      <div class="avatar">YN</div>
+      <dl class="details">
+        <div><dt>Name</dt><dd>Your Full Name</dd></div>
+        <div><dt>Roll no.</dt><dd>21XX1A0000</dd></div>
+        <div><dt>College</dt><dd>Your College Name</dd></div>
+        <div><dt>Address</dt><dd>Street, City, State, PIN</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <h2>Education</h2>
+    <div class="timeline">
+      <div class="item">
+        <h3>B.Tech in Computer Science</h3>
+        <span>Your College Name · 2022 – 2026 · CGPA 8.5</span>
+      </div>
+      <div class="item">
+        <h3>Intermediate (MPC)</h3>
+        <span>Your Junior College · 2020 – 2022 · 95%</span>
+      </div>
+      <div class="item">
+        <h3>Secondary School (SSC)</h3>
+        <span>Your School Name · 2020 · 9.8 GPA</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="skills">
+      <div><div class="skill-top"><span>HTML &amp; CSS</span><span>85%</span></div><div class="bar"><i data-level="85"></i></div></div>
+      <div><div class="skill-top"><span>JavaScript</span><span>70%</span></div><div class="bar"><i data-level="70"></i></div></div>
+      <div><div class="skill-top"><span>Python</span><span>75%</span></div><div class="bar"><i data-level="75"></i></div></div>
+      <div><div class="skill-top"><span>Communication</span><span>80%</span></div><div class="bar"><i data-level="80"></i></div></div>
+    </div>
+  </section>
+
+  <!-- HOBBIES & INTERESTS -->
+  <section id="interests">
+    <h2>Beyond the classroom</h2>
+    <div class="two-col">
+      <div class="card">
+        <h3>Hobbies</h3>
+        <ul class="tags"><li>Cricket</li><li>Reading</li><li>Photography</li><li>Music</li></ul>
+      </div>
+      <div class="card">
+        <h3>Interests</h3>
+        <ul class="tags"><li>Web development</li><li>Artificial intelligence</li><li>Open source</li><li>Problem solving</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <div class="card">
+      <dl class="details">
+        <div><dt>Email</dt><dd><a href="mailto:you@example.com">you@example.com</a></dd></div>
+        <div><dt>Phone</dt><dd><a href="tel:+910000000000">+91 00000 00000</a></dd></div>
+        <div><dt>LinkedIn</dt><dd><a href="https://linkedin.com/in/yourname">linkedin.com/in/yourname</a></dd></div>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer>© <span id="year"></span> Your Name. All rights reserved.</footer>
+
+<script>
+  // Mobile menu
+  const links = document.getElementById('links');
+  document.getElementById('menuBtn').addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+  // Light / dark theme (remembers choice; falls back gracefully if storage is blocked)
+  const root = document.documentElement;
+  let saved = null;
+  try { saved = localStorage.getItem('theme'); } catch (e) {}
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = saved || (prefersDark ? 'dark' : 'light');
+  document.getElementById('themeBtn').addEventListener('click', () => {
+    root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('theme', root.dataset.theme); } catch (e) {}
+  });
+
+  // Fill skill bars when they scroll into view
+  const bars = document.querySelectorAll('.bar i');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.style.width = e.target.dataset.level + '%'; io.unobserve(e.target); }
+    });
+  }, { threshold: 0.4 });
+  bars.forEach(b => io.observe(b));
+
+  // Footer year
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
